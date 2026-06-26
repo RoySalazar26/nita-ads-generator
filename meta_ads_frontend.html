@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Ads Generator Pro - Nita</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@latest/tabler-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 13px;
+        }
+        
+        .upload-zone {
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9ff;
+        }
+        
+        .upload-zone:hover {
+            background: #f0f2ff;
+            border-color: #764ba2;
+        }
+        
+        .upload-zone i {
+            font-size: 40px;
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .preview {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        
+        .button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .results {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .result-section {
+            margin-bottom: 30px;
+        }
+        
+        .result-section h3 {
+            font-size: 16px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .image-item {
+            text-align: center;
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .image-item a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-decoration: none;
+        }
+        
+        .copies-list {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .copy-item {
+            background: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .analysis-box {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3c3;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #c33;
+        }
+        
+        .tip {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #3c3;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍔 Meta Ads Pro - Nita</h1>
+            <p>Imágenes + Copies + Análisis automático en 1 click</p>
+        </div>
+        
+        <div class="main-grid">
+            <div class="card">
+                <h2>1️⃣ Tu Imagen & Detalles</h2>
+                
+                <div class="form-group">
+                    <label>Sube tu imagen</label>
+                    <div class="upload-zone" id="uploadZone">
+                        <i class="ti ti-photo"></i>
+                        <p style="font-weight: 600;">Arrastra o click</p>
+                        <p>PNG, JPG</p>
+                    </div>
+                    <div id="preview"></div>
+                    <input type="file" id="fileInput" accept="image/*" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Tipo de producto</label>
+                    <select id="productType">
+                        <option value="">Selecciona...</option>
+                        <option value="hamburguesa">Hamburguesa</option>
+                        <option value="hotdog">Hot Dog</option>
+                        <option value="combo">Combo</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="description" placeholder="Ej: Hamburguesa artesanal de queso y tocino, $15.000"></textarea>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>2️⃣ Tu Audiencia & Replicate</h2>
+                
+                <div class="form-group">
+                    <label>Audiencia objetivo</label>
+                    <textarea id="audience" placeholder="Ej: Jóvenes 18-35, trabajadores, Marinilla"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>CTA (Llamada a acción)</label>
+                    <select id="cta">
+                        <option value="">Selecciona...</option>
+                        <option value="pedir">Pedir ahora</option>
+                        <option value="verMenu">Ver menú</option>
+                        <option value="visitarnos">Visitarnos</option>
+                        <option value="aprovecharPromo">Aprovechar promo</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Tu Replicate API Token</label>
+                    <input type="password" id="replicateToken" placeholder="r8_..." />
+                    <p style="font-size: 11px; color: #999; margin-top: 6px;">
+                        👉 <a href="https://replicate.com/account/api-tokens" target="_blank" style="color: #667eea;">Obtén tu token aquí</a>
+                    </p>
+                </div>
+                
+                <button class="button" onclick="generarTodo()">
+                    <i class="ti ti-sparkles"></i>
+                    <span>Generar TODO (imágenes + copies + análisis)</span>
+                </button>
+            </div>
+        </div>
+        
+        <div id="results" class="results">
+            <h2 style="color: #667eea; margin-bottom: 25px;">✨ Tu campaña está lista</h2>
+            
+            <div class="result-section">
+                <h3>📸 Imágenes IA generadas</h3>
+                <div class="images-grid" id="imagesContainer"></div>
+            </div>
+            
+            <div class="result-section">
+                <h3>📝 Copies optimizados (7 opciones)</h3>
+                <div class="copies-list" id="copiesContainer"></div>
+            </div>
+            
+            <div class="result-section">
+                <h3>✅ Análisis de Meta Ads</h3>
+                <div class="analysis-box" id="analysisContainer"></div>
+            </div>
+            
+            <div class="tip">
+                💡 <strong>Próximo paso:</strong> Descarga las imágenes, copia los texts, ve a Meta Ads Manager y publica. ¡Tu anuncio estará vivo en 5 minutos!
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        
+        let imageBase64 = null;
+        
+        uploadZone.addEventListener('click', () => fileInput.click());
+        
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.style.background = '#e8ebff';
+        });
+        
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.style.background = '#f8f9ff';
+        });
+        
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imageBase64 = e.target.result;
+                preview.innerHTML = `<img src="${imageBase64}" class="preview" />`;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        async function generarTodo() {
+            const productType = document.getElementById('productType').value;
+            const description = document.getElementById('description').value;
+            const audience = document.getElementById('audience').value;
+            const cta = document.getElementById('cta').value;
+            const replicateToken = document.getElementById('replicateToken').value;
+            
+            if (!productType) {
+                alert('Por favor selecciona un tipo de producto');
+                return;
+            }
+            
+            if (!replicateToken) {
+                alert('Por favor ingresa tu Replicate API Token');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div><span>Generando (esto tarda 1-2 minutos)...</span>';
+            
+            try {
+                // Cambiar a tu URL de Vercel cuando esté deployado
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        productType,
+                        description,
+                        audience,
+                        cta,
+                        replicateToken,
+                        imageBase64
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Error generando contenido');
+                }
+                
+                mostrarResultados(data);
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="ti ti-sparkles"></i><span>Generar TODO (imágenes + copies + análisis)</span>';
+            }
+        }
+        
+        function mostrarResultados(data) {
+            // Imágenes
+            const imagesHtml = data.images.map((img, i) => `
+                <div class="image-item">
+                    <img src="${img.url}" alt="Generated ${i+1}" />
+                    <a href="${img.url}" download="nita-ad-${i+1}.jpg">Descargar</a>
+                </div>
+            `).join('');
+            document.getElementById('imagesContainer').innerHTML = imagesHtml || '<p style="color: #999;">Imágenes en proceso...</p>';
+            
+            // Copies
+            const copiesHtml = data.copies.split('\n')
+                .filter(line => line.trim())
+                .map(copy => `<div class="copy-item">${copy}</div>`)
+                .join('');
+            document.getElementById('copiesContainer').innerHTML = copiesHtml;
+            
+            // Análisis
+            document.getElementById('analysisContainer').innerHTML = `<pre style="white-space: pre-wrap; font-size: 12px;">${data.analysis}</pre>`;
+            
+            document.getElementById('results').classList.add('active');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

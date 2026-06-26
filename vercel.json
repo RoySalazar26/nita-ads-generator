@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm install",
+  "env": [
+    "ANTHROPIC_API_KEY"
+  ],
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 300,
+      "memory": 3008
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "nita-meta-ads-generator",
+  "version": "1.0.0",
+  "description": "Sistema automático para generar imágenes, copies y análisis para Meta Ads",
+  "main": "api/generate.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "18.x"
+  }
+}
